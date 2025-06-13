@@ -2,10 +2,14 @@ services:
   - type: web
     name: product-filler
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: |
+      pip install --upgrade pip setuptools wheel
+      pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: 3.9.18
+      - key: PYTHONPATH
+        value: /opt/render/project/src
     healthCheckPath: /
     autoDeploy: true 
