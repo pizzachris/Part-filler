@@ -1,0 +1,9 @@
+flask==3.0.2
+pandas==2.2.1
+openpyxl==3.1.2
+fuzzywuzzy
+python-docx
+werkzeug==3.0.1
+PyPDF2==3.0.1
+pdfplumber==0.10.3
+gunicorn==21.2.0
