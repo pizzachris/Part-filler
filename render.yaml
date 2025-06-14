@@ -3,24 +3,32 @@ services:
     name: product-filler
     env: python
     buildCommand: |
-      apt-get update && apt-get install -y \
-        build-essential \
-        python3-dev \
-        gcc \
-        g++ \
-        libpq-dev \
-        && rm -rf /var/lib/apt/lists/*
-      pip install --upgrade pip setuptools wheel
-      pip install --no-cache-dir -r requirements.txt
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
     startCommand: gunicorn app.main:app
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.7
-      - key: PYTHONPATH
-        value: /opt/render/project/src
+        value: 3.11.0
       - key: FLASK_APP
         value: app.main
       - key: FLASK_ENV
         value: production
+    buildFilter:
+      paths:
+        - package.json
+        - requirements.txt
+        - render.yaml
     healthCheckPath: /
-    autoDeploy: true 
+    autoDeploy: true
+    plan: free
+    buildCommand: |
+      python -m pip install --upgrade pip
+      pip install --no-cache-dir -r requirements.txt
+    startCommand: gunicorn app.main:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: FLASK_APP
+        value: app.main
+      - key: FLASK_ENV
+        value: production 
